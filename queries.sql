@@ -189,8 +189,6 @@ GROUP BY r.id
 ORDER BY equipment_count DESC
 LIMIT 1;
 
-CREATE INDEX recipe_id_index ON recipe_equipment(recipe_id) USING BTREE; 
-
 -- 3.7. Βρείτε όλους τους μάγειρες που συμμετείχαν τουλάχιστον 
 -- 5 λιγότερες φορές από τον μάγειρα με τις περισσότερες συμμετοχές σε επεισόδια.
 WITH contestant_appearance_counts AS (
@@ -251,7 +249,6 @@ GROUP BY rtj1.tag_id, rtj2.tag_id
 ORDER BY appearances DESC
 LIMIT 3;
 
-ANALYZE TABLE recipe_meal_tag;
 
 EXPLAIN WITH recipe_tags_joined AS
 (
@@ -343,7 +340,7 @@ JOIN episode AS e ON ec.episode_id = e.id
 WHERE cc.cuisine_id= :cuisine_id AND e.season_id= :season_id;
     
 -- 3.1. Μέσος Όρος Αξιολογήσεων (σκορ) ανά μάγειρα και Εθνική κουζίνα.
-EXPLAIN SELECT 
+SELECT 
 	c.id AS cook_id,
     CONCAT(c.name, ' ', c.surname) AS cook_name,
     AVG(s.score) AS average_rating_cook
